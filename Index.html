@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enviar Datos a la API</title>
+</head>
+<body>
+  <h1>Enviar RUT y Celular</h1>
+  <form id="dataForm">
+    <label for="rut">RUT:</label>
+    <input type="text" id="rut" name="rut" required><br><br>
+    <label for="celular">Celular:</label>
+    <input type="text" id="celular" name="celular" required><br><br>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('dataForm');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const rut = document.getElementById('rut').value;
+      const celular = document.getElementById('celular').value;
+
+      const response = await fetch('/api/get-link', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ rut, celular })
+      });
+
+      const data = await response.json();
+      console.log(data);
+      alert(data.message);
+    });
+  </script>
+</body>
+</html>
